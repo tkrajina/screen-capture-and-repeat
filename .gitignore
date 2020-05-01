@@ -1,0 +1,6 @@
+.mypy_cache/
+.vscode
+*.png
+*.pyc
+*.pdf
+.DS_Store
