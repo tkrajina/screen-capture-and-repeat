@@ -17,14 +17,10 @@
 
 import distutils.core as mod_distutilscore
 
-with open('README.md') as f:
-    long_description = f.read()
-
 mod_distutilscore.setup(
     name = 'screen-capture-and-repeat',
-    version = '0.0.1',
+    version = '0.0.2',
     description = 'Automate taking screenshots',
-    long_description=long_description,
     long_description_content_type="text/markdown",
     license = 'Apache License, Version 2.0',
     author = 'Tomo Krajina',
