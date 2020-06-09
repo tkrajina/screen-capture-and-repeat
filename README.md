@@ -6,3 +6,11 @@ Tool to automate:
 - take a screenshot of that part of the screen
 - click "next"
 - repeat
+
+## Installation
+
+    pip install screen-capture-and-repeat
+
+## License
+
+This tool is licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
