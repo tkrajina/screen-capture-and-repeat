@@ -13,7 +13,7 @@ class Configuration:
         self.y1: int = 0
         self.x2: int = 0
         self.y2: int = 0
-        self.sleep: int = 0.1
+        self.sleep: float = 0.1
         self.retina: bool = False
         self.mouse_x: int = 0
         self.mouse_y: int = 0
