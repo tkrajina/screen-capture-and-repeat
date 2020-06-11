@@ -194,7 +194,7 @@ def take_screenshots(cnf: Configuration) -> None:
         pyautogui.mouseDown()
         time.sleep(0.1)
         pyautogui.mouseUp()
-        time.sleep(0.1)
+        time.sleep(cnf.sleep)
         print(f"{i}/{n} -> {fn}")
 
 def change_work_dir(cnf: Configuration) -> None:
@@ -205,6 +205,13 @@ def change_work_dir(cnf: Configuration) -> None:
     except:
         print("Can't create directory", dir)
         cnf.work_dir = "."
+
+def wait_time(cnf: Configuration) -> None:
+    try:
+        cnf.sleep = float(input("Enter time:"))
+    except:
+        print("Invalid time")
+        cnf.sleep = 0.1
 
 def main_menu() -> None:
     cnf = Configuration()
@@ -219,6 +226,7 @@ def main_menu() -> None:
     except:
         ratio = "???"
     options.append(("s", lambda cnf: f"Take screenshots (sides ratio: {cnf.x2 - cnf.x1}:{cnf.y2 - cnf.y1}={ratio})", take_screenshots))
+    options.append(("w", lambda cnf: f"Wait between screenshowts ({cnf.sleep}s)", wait_time))
     options.append(("r", lambda cnf: f"Resize ({cnf.resize_ratio})", resize_ratio))
     options.append(("b", lambda cnf: f"Convert to black-and-white ({cnf.convert_to_bw})", toggle_bw))
     options.append(("n", lambda cnf: f"Retina screen ({cnf.retina})", toggle_retina))

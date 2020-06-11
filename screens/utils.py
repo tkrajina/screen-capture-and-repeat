@@ -13,12 +13,13 @@ class Configuration:
         self.y1: int = 0
         self.x2: int = 0
         self.y2: int = 0
+        self.sleep: int = 0.1
         self.retina: bool = False
         self.mouse_x: int = 0
         self.mouse_y: int = 0
         self.resize_ratio: float = 1
         self.convert_to_bw = True
-        self.jsonize = ["work_dir", "x1", "y1", "x2", "y2", "mouse_x", "mouse_y", "resize_ratio", "convert_to_bw", "retina"]
+        self.jsonize = ["work_dir", "x1", "y1", "x2", "y2", "mouse_x", "mouse_y", "resize_ratio", "convert_to_bw", "retina", "sleep"]
         if self.work_dir != ".":
             os.makedirs(self.work_dir)
 
@@ -57,13 +58,14 @@ class Configuration:
 def menu(title: str, options: List[Tuple[str, Callable[[Configuration], str], Callable[[Configuration], None]]],
          cnf: Configuration, exit_key: str = "", exit_option: str = "") -> None:
     keys: Dict[str, bool] = {}
+    for key, descr, func in options:
+        if key in keys:
+            raise Exception(f"Double key {key}")
+        keys[key] = True
     while True:
         print("----------------------------------------------------------------------------------------------------")
         print(f"{title}:\n")
         for key, descr, func in options:
-            if key in keys:
-                raise Exception(f"Double key {key}")
-            keys[key] = True
             print(f"{key} - {descr(cnf)}")
         if exit_key:
             print(f"{exit_key} - {exit_option if exit_option else 'Exit'}")
