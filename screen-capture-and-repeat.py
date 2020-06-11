@@ -211,17 +211,17 @@ def main_menu() -> None:
     cnf.load()
 
     options: List[Tuple[str, Callable[[Configuration], str], Callable[[Configuration], None]]] = []
-    options.append(("d", lambda cnf: f"Working directory ({cnf.work_dir})", change_work_dir))
-    options.append(("p", lambda cnf: "Prepare screenshots", prepare_screenshots))
+    options.append(("d", lambda cnf: f"Working directory for screenshots ({cnf.work_dir})", change_work_dir))
+    options.append(("p", lambda cnf: "Prepare screenshots geometry", prepare_screenshots))
     options.append(("t", lambda cnf: "Test screenshot", test_screenshot))
     try:
         ratio = f"1:{(cnf.y2 - cnf.y1)/(cnf.x2 - cnf.x1)}"
     except:
         ratio = "???"
-    options.append(("s", lambda cnf: f"Take screenshots ({cnf.x2 - cnf.x1}:{cnf.y2 - cnf.y1}={ratio})", take_screenshots))
-    options.append(("r", lambda cnf: f"Resize ratio ({cnf.resize_ratio})", resize_ratio))
+    options.append(("s", lambda cnf: f"Take screenshots (sides ratio: {cnf.x2 - cnf.x1}:{cnf.y2 - cnf.y1}={ratio})", take_screenshots))
+    options.append(("r", lambda cnf: f"Resize ({cnf.resize_ratio})", resize_ratio))
     options.append(("b", lambda cnf: f"Convert to black-and-white ({cnf.convert_to_bw})", toggle_bw))
-    options.append(("r", lambda cnf: f"Retina screen ({cnf.retina})", toggle_retina))
+    options.append(("n", lambda cnf: f"Retina screen ({cnf.retina})", toggle_retina))
     options.append(("e", lambda cnf: "Export to pdf", export_to_pdf))
     menu("Select", options, cnf, "q", "Quit")
 

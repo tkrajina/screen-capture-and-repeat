@@ -56,10 +56,14 @@ class Configuration:
 
 def menu(title: str, options: List[Tuple[str, Callable[[Configuration], str], Callable[[Configuration], None]]],
          cnf: Configuration, exit_key: str = "", exit_option: str = "") -> None:
+    keys = {}
     while True:
         print("----------------------------------------------------------------------------------------------------")
         print(f"{title}:\n")
         for key, descr, func in options:
+            if key in keys:
+                raise Exception(f"Double key {key}")
+            keys[key] = True
             print(f"{key} - {descr(cnf)}")
         if exit_key:
             print(f"{exit_key} - {exit_option if exit_option else 'Exit'}")
