@@ -56,7 +56,7 @@ class Configuration:
 
 def menu(title: str, options: List[Tuple[str, Callable[[Configuration], str], Callable[[Configuration], None]]],
          cnf: Configuration, exit_key: str = "", exit_option: str = "") -> None:
-    keys = {}
+    keys: Dict[str, bool] = {}
     while True:
         print("----------------------------------------------------------------------------------------------------")
         print(f"{title}:\n")
