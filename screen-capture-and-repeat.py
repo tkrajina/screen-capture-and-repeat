@@ -171,11 +171,16 @@ def export_to_pdf(cnf: Configuration) -> None:
                 label += f" of {pages}"
         print(f"{n}/{len(original_files)}: {file}")
         processed_images.append(prepare_image(cnf.path(file), bw=cnf.convert_to_bw, page=label, resize=cnf.resize_ratio))
-    
-    outfile = cnf.path("exported.pdf")
+
+    filename = ""
+    for c in cnf.work_dir:
+        filename += c if c.isalnum() or c.isalpha() else "_"
+
+    outfile = cnf.path(filename if filename else "exported.pdf")
     print(f"Converting to {outfile}")
     im1 = processed_images[0]
     im1.save(outfile, save_all=True, append_images=processed_images[1:])
+    print(f"Saved to {filename}")
 
 def take_screenshots(cnf: Configuration) -> None:
     try:
