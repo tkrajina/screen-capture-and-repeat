@@ -32,7 +32,7 @@ def prepare_screenshots(cnf: Configuration) -> None:
     print("2. The lower-right corner of the area to screenshot")
     print("3. The location where to click for the next page")
     print("4. Click on the screenshot to close the window")
-    wait(4)
+    wait(2)
 
     tmp_filename = cnf.path("__tmp.png")
     img = pyautogui.screenshot()
@@ -100,7 +100,7 @@ def make_screenshot(file_name: str, cnf: Configuration, scale: float=1) -> Any:
     img.save(file_name)
 
 def test_screenshot(cnf: Configuration) -> None:
-    wait(4)
+    wait(2)
     print()
     print("Click on the screenshot to close")
     tmp_file = cnf.path("example_screenshot.png")
@@ -187,7 +187,7 @@ def take_screenshots(cnf: Configuration) -> None:
         n = int(input("How many screenshots/pages: "))
     except:
         n = 0
-    wait(4)
+    wait(2)
 
     for i in range(n):
         now = datetime.datetime.now()
