@@ -176,7 +176,7 @@ def export_to_pdf(cnf: Configuration) -> None:
     for c in cnf.work_dir:
         filename += c if c.isalnum() or c.isalpha() else "_"
 
-    outfile = cnf.path(filename if filename else "exported.pdf")
+    outfile = cnf.path(filename + ".pdf" if filename else "exported.pdf")
     print(f"Converting to {outfile}")
     im1 = processed_images[0]
     im1.save(outfile, save_all=True, append_images=processed_images[1:])
