@@ -3,6 +3,10 @@ GIT_PORCELAIN_STATUS=$(shell git status --porcelain)
 mypy:
 	mypy --strict .
 
+clean:
+	-rm -Rf MANIFEST
+	-rm -Rf dist
+
 check-all-committed:
 	if [ -n "$(GIT_PORCELAIN_STATUS)" ]; \
 	then \
