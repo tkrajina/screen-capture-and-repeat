@@ -193,7 +193,7 @@ def take_screenshots(cnf: Configuration) -> None:
         n = 0
     take_n_screenshots(cnf, n)
 
-def screenshots_the_rest(cnf: Configuration) -> None:
+def screenshot_the_rest(cnf: Configuration) -> None:
     screenshots = get_screenshots(cnf)
 
     if len(screenshots) <= 5:
@@ -201,14 +201,14 @@ def screenshots_the_rest(cnf: Configuration) -> None:
         take_screenshots(cnf)
         return
 
-    try: current_document_page = int(input("Current page: "))
+    try: current_document_page = int(input("Current document page: "))
     except: current_document_page = 0
 
     if current_document_page == 0:
         take_screenshots(cnf)
         return
 
-    try: last_document_page = int(input("Last page: "))
+    try: last_document_page = int(input("Total document pages: "))
     except: last_document_page = 0
 
     one_document_page_screenshots = len(screenshots) / current_document_page
@@ -270,16 +270,15 @@ def main_menu() -> None:
     cnf = Configuration()
     cnf.load()
 
+    try: ratio = f"1:{(cnf.y2 - cnf.y1)/(cnf.x2 - cnf.x1)}"
+    except: ratio = "???"
+
     options: List[Tuple[str, Callable[[Configuration], str], Callable[[Configuration], None]]] = []
     options.append(("d", lambda cnf: f"Working directory for screenshots ({cnf.work_dir})", change_work_dir))
     options.append(("p", lambda cnf: "Prepare screenshots geometry", prepare_screenshots))
     options.append(("t", lambda cnf: "Test screenshot", test_screenshot))
-    try:
-        ratio = f"1:{(cnf.y2 - cnf.y1)/(cnf.x2 - cnf.x1)}"
-    except:
-        ratio = "???"
     options.append(("s", lambda cnf: f"Take screenshots (sides ratio: {cnf.x2 - cnf.x1}:{cnf.y2 - cnf.y1}={ratio})", take_screenshots))
-    options.append(("sr", lambda cnf: f"Screenshot the rest of the document", screenshots_the_rest))
+    options.append(("sr", lambda cnf: f"Screenshot the rest of the document", screenshot_the_rest))
     options.append(("w", lambda cnf: f"Wait between screenshowts ({cnf.sleep}s)", wait_time))
     options.append(("r", lambda cnf: f"Resize ({cnf.resize_ratio})", resize_ratio))
     options.append(("b", lambda cnf: f"Convert to black-and-white ({cnf.convert_to_bw})", toggle_bw))
