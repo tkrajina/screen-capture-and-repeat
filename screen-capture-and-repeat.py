@@ -232,6 +232,7 @@ def take_n_screenshots(cnf: Configuration, count: int) -> None:
 
     wait(2)
 
+    started = datetime.datetime.now()
     for i in range(count):
         now = datetime.datetime.now()
         fn = cnf.path(screenshot_prefix + now.isoformat().replace(":", "_") + ".png")
@@ -243,7 +244,11 @@ def take_n_screenshots(cnf: Configuration, count: int) -> None:
         time.sleep(0.1)
         pyautogui.mouseUp()
         time.sleep(cnf.sleep)
-        print(f"{i}/{count} -> {fn}")
+        remaining_time_str = ""
+        if i > 0:
+            time_per_screenshot = (datetime.datetime.now() - started) / i
+            remaining_time_str = f" [Remaining time ~{(count - i) * time_per_screenshot}]"
+        print(f"{i}/{count} -> {fn} {remaining_time_str}")
 
 def change_work_dir(cnf: Configuration) -> None:
     dir = input("Enter work directory name:")
