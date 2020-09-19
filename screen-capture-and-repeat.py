@@ -149,13 +149,17 @@ def prepare_image(file_in: str, bw: bool=False, page: str="", resize: float=1) -
     return out
 
 
-def export_to_pdf(cnf: Configuration) -> None:
+def get_screenshots(cnf: Configuration) -> List[str]:
     original_files: List[str] = []
     file = ""
     for file in os.listdir(cnf.work_dir):
         if file.startswith(screenshot_prefix):
             original_files.append(file)
     original_files.sort()
+    return original_files
+
+def export_to_pdf(cnf: Configuration) -> None:
+    original_files = get_screenshots(cnf)
 
     pages = 0
     try: pages = int(input("Last page no (or leave empty for no pagination): "))
@@ -187,9 +191,48 @@ def take_screenshots(cnf: Configuration) -> None:
         n = int(input("How many screenshots/pages: "))
     except:
         n = 0
+    take_n_screenshots(cnf, n)
+
+def screenshots_the_rest(cnf: Configuration) -> None:
+    screenshots = get_screenshots(cnf)
+
+    if len(screenshots) <= 5:
+        print("Too few screenshots")
+        take_screenshots(cnf)
+        return
+
+    try: current_document_page = int(input("Current page: "))
+    except: current_document_page = 0
+
+    if current_document_page == 0:
+        take_screenshots(cnf)
+        return
+
+    try: last_document_page = int(input("Last page: "))
+    except: last_document_page = 0
+
+    one_document_page_screenshots = len(screenshots) / current_document_page
+    total_screenshots = last_document_page * one_document_page_screenshots
+    rest = int(total_screenshots - len(screenshots))
+
+    print(f"One document page is ~{one_document_page_screenshots} screenshots")
+    print(f"In total it will be ~{total_screenshots} screenshots")
+    print(f"=> need ~{rest} screenshots")
+
+    try:
+        n = int(input(f"How many screenshots/pages (<enter> for {rest}): "))
+    except:
+        n = rest
+
+    take_n_screenshots(cnf, n)
+
+def take_n_screenshots(cnf: Configuration, count: int) -> None:
+    if count == 0:
+        return
+
     wait(2)
 
-    for i in range(n):
+    for i in range(count):
         now = datetime.datetime.now()
         fn = cnf.path(screenshot_prefix + now.isoformat().replace(":", "_") + ".png")
         make_screenshot(fn, cnf)
@@ -200,7 +243,7 @@ def take_screenshots(cnf: Configuration) -> None:
         time.sleep(0.1)
         pyautogui.mouseUp()
         time.sleep(cnf.sleep)
-        print(f"{i}/{n} -> {fn}")
+        print(f"{i}/{count} -> {fn}")
 
 def change_work_dir(cnf: Configuration) -> None:
     dir = input("Enter work directory name:")
@@ -231,10 +274,11 @@ def main_menu() -> None:
     except:
         ratio = "???"
     options.append(("s", lambda cnf: f"Take screenshots (sides ratio: {cnf.x2 - cnf.x1}:{cnf.y2 - cnf.y1}={ratio})", take_screenshots))
+    options.append(("sr", lambda cnf: f"Screenshot the rest of the document", screenshots_the_rest))
     options.append(("w", lambda cnf: f"Wait between screenshowts ({cnf.sleep}s)", wait_time))
     options.append(("r", lambda cnf: f"Resize ({cnf.resize_ratio})", resize_ratio))
     options.append(("b", lambda cnf: f"Convert to black-and-white ({cnf.convert_to_bw})", toggle_bw))
-    options.append(("n", lambda cnf: f"Retina screen ({cnf.retina})", toggle_retina))
+    options.append(("re", lambda cnf: f"Retina screen ({cnf.retina})", toggle_retina))
     options.append(("e", lambda cnf: "Export to pdf", export_to_pdf))
     menu("Select", options, cnf, "q", "Quit")
 
