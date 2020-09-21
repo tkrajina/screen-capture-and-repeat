@@ -174,7 +174,11 @@ def export_to_pdf(cnf: Configuration) -> None:
             if pages:
                 label += f" of {pages}"
         print(f"{n}/{len(original_files)}: {file}")
-        processed_images.append(prepare_image(cnf.path(file), bw=cnf.convert_to_bw, page=label, resize=cnf.resize_ratio))
+        try:
+            processed_images.append(prepare_image(cnf.path(file), bw=cnf.convert_to_bw, page=label, resize=cnf.resize_ratio))
+        except:
+            if "y" != input(f"Error opening image {cnf.path}, continue [Yn]"):
+                return
 
     filename = ""
     for c in cnf.work_dir:
