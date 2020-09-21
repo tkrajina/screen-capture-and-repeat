@@ -250,7 +250,7 @@ def take_n_screenshots(cnf: Configuration, count: int) -> None:
         pyautogui.mouseUp()
         time.sleep(cnf.sleep)
         remaining_time_str = ""
-        if i > 0:
+        if i > 5:
             time_per_screenshot = (datetime.datetime.now() - started) / i
             remaining_time_str = f" [Remaining time ~{(count - i) * time_per_screenshot}]"
         print(f"{i}/{count} -> {fn} {remaining_time_str}")
