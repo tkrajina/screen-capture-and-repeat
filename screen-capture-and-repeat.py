@@ -212,11 +212,12 @@ def screenshot_the_rest(cnf: Configuration) -> None:
         take_screenshots(cnf)
         return
 
-    try: last_document_page = int(input("Total document pages: "))
-    except: last_document_page = 0
+    try: last_document_page = int(input(f"Total document pages: [{cnf.total_pages}] "))
+    except: last_document_page = cnf.total_pages
+    cnf.total_pages = last_document_page
 
     one_document_page_screenshots = len(screenshots) / current_document_page
-    total_screenshots = last_document_page * one_document_page_screenshots
+    total_screenshots = cnf.total_pages * one_document_page_screenshots
     rest = int(total_screenshots - len(screenshots))
 
     print(f"One document page is ~{one_document_page_screenshots} screenshots")
