@@ -177,7 +177,7 @@ def export_to_pdf(cnf: Configuration) -> None:
         try:
             processed_images.append(prepare_image(cnf.path(file), bw=cnf.convert_to_bw, page=label, resize=cnf.resize_ratio))
         except:
-            if "y" != input(f"Error opening image {cnf.path}, continue [Yn]"):
+            if "n" == input(f"Error opening image {cnf.path}, continue [Yn]"):
                 return
 
     filename = ""
