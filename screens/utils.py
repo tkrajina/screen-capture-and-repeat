@@ -20,7 +20,8 @@ class Configuration:
         self.resize_ratio: float = 1
         self.convert_to_bw = True
         self.total_pages = 0
-        self.jsonize = ["work_dir", "x1", "y1", "x2", "y2", "mouse_x", "mouse_y", "resize_ratio", "convert_to_bw", "retina", "sleep", "total_pages"]
+        self.dir_opener = "open"
+        self.jsonize = ["work_dir", "x1", "y1", "x2", "y2", "mouse_x", "mouse_y", "resize_ratio", "convert_to_bw", "retina", "sleep", "total_pages", "dir_opener"]
         if self.work_dir != ".":
             os.makedirs(self.work_dir)
 

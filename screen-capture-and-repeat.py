@@ -283,6 +283,9 @@ def main_menu() -> None:
     cnf = Configuration()
     cnf.load()
 
+    if len(sys.argv) > 1:
+        cnf.work_dir = sys.argv[1]
+
     try: ratio = f"1:{(cnf.y2 - cnf.y1)/(cnf.x2 - cnf.x1)}"
     except: ratio = "???"
 
