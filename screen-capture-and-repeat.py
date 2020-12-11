@@ -172,8 +172,6 @@ def export_to_pdf(cnf: Configuration) -> None:
         if pages:
             page = 1 + math.floor(0 + (n / len(original_files)) * pages)
             label = f"{page}"
-            if pages:
-                label += f" of {pages}"
         print(f"{n}/{len(original_files)}: {file}")
         try:
             processed_images.append(prepare_image(cnf.path(file), bw=cnf.convert_to_bw, page=label, resize=cnf.resize_ratio))
