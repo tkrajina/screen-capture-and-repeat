@@ -10,6 +10,7 @@ import time
 import datetime
 import pyautogui # type: ignore
 from PIL import ImageDraw, Image, ImageFont #type: ignore
+import subprocess
 
 from screens.utils import *
 from screens.img import *
@@ -271,6 +272,13 @@ def wait_time(cnf: Configuration) -> None:
         print("Invalid time")
         cnf.sleep = 0.1
 
+def open_dir(cnf: Configuration) -> None:
+    dir_opener = input(f"Open with command [{cnf.dir_opener}]:")
+    if dir_opener:
+        cnf.dir_opener = dir_opener
+    
+    subprocess.check_output([cnf.dir_opener, cnf.work_dir])
+
 def main_menu() -> None:
     cnf = Configuration()
     cnf.load()
@@ -288,6 +296,7 @@ def main_menu() -> None:
     options.append(("r", lambda cnf: f"Resize ({cnf.resize_ratio})", resize_ratio))
     options.append(("b", lambda cnf: f"Convert to black-and-white ({cnf.convert_to_bw})", toggle_bw))
     options.append(("re", lambda cnf: f"Retina screen ({cnf.retina})", toggle_retina))
+    options.append(("o", lambda cnf: f"Open directory with ({cnf.dir_opener})", open_dir))
     options.append(("e", lambda cnf: "Export to pdf", export_to_pdf))
     menu("Select", options, cnf, "q", "Quit")
 
