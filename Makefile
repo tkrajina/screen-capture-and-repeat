@@ -3,6 +3,9 @@ GIT_PORCELAIN_STATUS=$(shell git status --porcelain)
 mypy:
 	mypy --strict .
 
+install: mypy
+	pip install .
+
 clean:
 	-rm -Rf MANIFEST
 	-rm -Rf dist
