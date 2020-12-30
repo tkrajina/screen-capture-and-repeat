@@ -9,7 +9,13 @@ Tool to automate:
 
 ## Installation
 
+From pypi:
+
     pip install screen-capture-and-repeat
+
+Or clone this repository ant
+
+    pip install .
 
 ## License
 
