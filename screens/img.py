@@ -1,6 +1,6 @@
 import sys
-from PyQt5.QtWidgets import QWidget, QMessageBox, QApplication, QLabel # type: ignore
-from PyQt5.QtGui import QIcon, QPixmap # type: ignore
+from PyQt6.QtWidgets import QWidget, QApplication, QLabel # type: ignore
+from PyQt6.QtGui import QPixmap # type: ignore
 
 from typing import *
 
