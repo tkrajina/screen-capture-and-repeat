@@ -27,13 +27,13 @@ class ShowImage(QWidget): # type: ignore
         self.show()
 
     def mousePressEvent(self, e: Any) -> None:
-        self.click_x = e.x()
-        self.click_y = e.y()
+        self.click_x = e.position().x()
+        self.click_y = e.position().y()
         print(f"x: {self.click_x},  y: {self.click_y}")
         self.close()
 
 def show_image(file_name: str, width: int, height: int) -> Tuple[int, int]:
     app = QApplication(sys.argv)
     ex = ShowImage(file_name, width, height)
-    app.exec_()
+    app.exec()
     return (ex.click_x, ex.click_y)
