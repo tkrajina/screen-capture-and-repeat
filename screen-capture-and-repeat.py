@@ -76,19 +76,18 @@ def prepare_screenshots(cnf: Configuration) -> None:
     draw.line((x2, 0, x2, img.height), fill="red")
     img.save(tmp_filename)
 
-    # Open window and wait "next" button position
-    next_page_key = input("Next page key (if empty => clicks for next)")
-    if next_page_key:
-        cnf.next_page_key = next_page_key
-    else:
-        x3, y3 = show_image(tmp_filename, img.width, img.height)
-        cnf.mouse_x = x3 * coef
-        cnf.mouse_y = y3 * coef
-
+    x3, y3 = show_image(tmp_filename, img.width, img.height)
+    cnf.mouse_x = x3 * coef
+    cnf.mouse_y = y3 * coef
     draw = ImageDraw.Draw(img)
     draw.line((x3-5, y3, x3+5, y3), fill="orange")
     draw.line((x3, y3-5, x3, y3+5), fill="orange")
     img.save(tmp_filename)
+
+    # Open window and wait "next" button position
+    next_page_key = input("Next page keyboard key (eg. pgdn, left, ...): ")
+    if next_page_key:
+        cnf.next_page_key = next_page_key
 
     show_image(tmp_filename, img.width, img.height)
     cnf.x1 = x1 * coef
@@ -249,8 +248,10 @@ def take_n_screenshots(cnf: Configuration, count: int) -> None:
         coef = 2 if cnf.retina else 1
         pyautogui.moveTo(cnf.mouse_x / coef, cnf.mouse_y / coef)
         pyautogui.mouseDown()
-        time.sleep(0.1)
+        time.sleep(0.05)
         pyautogui.mouseUp()
+        if cnf.next_page_key:
+            pyautogui.press(cnf.next_page_key)
         time.sleep(cnf.sleep)
         remaining_time_str = ""
         if i > 5:
