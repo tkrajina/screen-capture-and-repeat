@@ -17,11 +17,12 @@ class Configuration:
         self.retina: bool = False
         self.mouse_x: int = 0
         self.mouse_y: int = 0
+        self.next_page_key: str = ""
         self.resize_ratio: float = 1
         self.convert_to_bw = True
         self.total_pages = 0
         self.dir_opener = "open"
-        self.jsonize = ["work_dir", "x1", "y1", "x2", "y2", "mouse_x", "mouse_y", "resize_ratio", "convert_to_bw", "retina", "sleep", "total_pages", "dir_opener"]
+        self.jsonize = ["work_dir", "x1", "y1", "x2", "y2", "mouse_x", "mouse_y", "resize_ratio", "convert_to_bw", "retina", "sleep", "total_pages", "dir_opener", "next_page_key"]
         if self.work_dir != ".":
             os.makedirs(self.work_dir)
 

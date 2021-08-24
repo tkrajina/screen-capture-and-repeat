@@ -77,7 +77,13 @@ def prepare_screenshots(cnf: Configuration) -> None:
     img.save(tmp_filename)
 
     # Open window and wait "next" button position
-    x3, y3 = show_image(tmp_filename, img.width, img.height)
+    next_page_key = input("Next page key (if empty => clicks for next)")
+    if next_page_key:
+        cnf.next_page_key = next_page_key
+    else:
+        x3, y3 = show_image(tmp_filename, img.width, img.height)
+        cnf.mouse_x = x3 * coef
+        cnf.mouse_y = y3 * coef
 
     draw = ImageDraw.Draw(img)
     draw.line((x3-5, y3, x3+5, y3), fill="orange")
@@ -89,8 +95,6 @@ def prepare_screenshots(cnf: Configuration) -> None:
     cnf.y1 = y1 * coef
     cnf.x2 = x2 * coef
     cnf.y2 = y2 * coef
-    cnf.mouse_x = x3 * coef
-    cnf.mouse_y = y3 * coef
 
 def make_screenshot(file_name: str, cnf: Configuration, scale: float=1) -> Any:
     region = (cnf.x1, cnf.y1, cnf.x2 - cnf.x1, cnf.y2 - cnf.y1)
