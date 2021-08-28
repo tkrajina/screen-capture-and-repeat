@@ -29,6 +29,10 @@ class Configuration:
         home_dir = str(pathlib.Path.home()) or os.environ.get("HOME") or os.environ.get("HOMEPATH") or ""
         self.cfg_file = path.join(home_dir, ".screenshots.json")
 
+    def ratio(self) -> str:
+        try: return f"1:{(self.y2 - self.y1)/(self.x2 - self.x1)}"
+        except: return "???"
+
     def path(self, filename: str) -> str:
         if not self.work_dir:
             return filename

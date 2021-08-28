@@ -289,14 +289,11 @@ def main_menu() -> None:
     if len(sys.argv) > 1:
         cnf.work_dir = sys.argv[1]
 
-    try: ratio = f"1:{(cnf.y2 - cnf.y1)/(cnf.x2 - cnf.x1)}"
-    except: ratio = "???"
-
     options: List[Tuple[str, Callable[[Configuration], str], Callable[[Configuration], None]]] = []
     options.append(("d", lambda cnf: f"Working directory for screenshots ({cnf.work_dir})", change_work_dir))
     options.append(("p", lambda cnf: "Prepare screenshots geometry", prepare_screenshots))
     options.append(("t", lambda cnf: "Test screenshot", test_screenshot))
-    options.append(("s", lambda cnf: f"Take screenshots (sides ratio: {cnf.x2 - cnf.x1}:{cnf.y2 - cnf.y1}={ratio})", take_screenshots))
+    options.append(("s", lambda cnf: f"Take screenshots (sides ratio: {cnf.x2 - cnf.x1}:{cnf.y2 - cnf.y1}={cnf.ratio()})", take_screenshots))
     options.append(("sr", lambda cnf: f"Screenshot the rest of the document", screenshot_the_rest))
     options.append(("w", lambda cnf: f"Wait between screenshowts ({cnf.sleep}s)", wait_time))
     options.append(("r", lambda cnf: f"Resize ({cnf.resize_ratio})", resize_ratio))
