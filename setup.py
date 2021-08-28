@@ -19,7 +19,7 @@ import distutils.core as mod_distutilscore
 
 mod_distutilscore.setup(
     name = 'screen-capture-and-repeat',
-    version = '0.0.6',
+    version = '0.0.7',
     description = 'Automate taking screenshots',
     long_description_content_type="text/markdown",
     license = 'Apache License, Version 2.0',
