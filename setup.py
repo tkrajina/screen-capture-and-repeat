@@ -34,6 +34,6 @@ mod_distutilscore.setup(
         "Programming Language :: Python :: 3",
     ],
     install_requires=['Pillow', 'pyautogui', 'PyQt6'],
-    scripts=['screen-capture-and-repeat.py']
+    scripts=['screen-capture-and-repeat.py', 'screen-coordinates.py']
 )
 
