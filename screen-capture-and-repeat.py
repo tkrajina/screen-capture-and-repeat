@@ -1,21 +1,18 @@
 #!/usr/bin/env python3
 
-import os
-import math
-import sys
-import pathlib
-import os.path as path
-import json
-import time
 import datetime
-import pyautogui # type: ignore
-from PIL import ImageDraw, Image, ImageFont #type: ignore
+import math
+import os
 import subprocess
-
-from screens.utils import *
-from screens.img import *
-
+import sys
+import time
 from typing import *
+
+import pyautogui  # type: ignore
+from PIL import Image, ImageDraw, ImageFont  # type: ignore
+
+from screens.img import *
+from screens.utils import *
 
 screenshot_prefix = "page__"
 
@@ -58,7 +55,7 @@ def prepare_screenshots(cnf: Configuration) -> None:
     img.save(tmp_filename)
 
     # Open window and wait for upper left click
-    print("Click on upper-right part of the screenshot area")
+    print("Click on upper-left part of the screenshot area")
     x1, y1 = show_image(tmp_filename, img.width, img.height)
 
     # Draw boundaires
@@ -68,6 +65,7 @@ def prepare_screenshots(cnf: Configuration) -> None:
     img.save(tmp_filename)
 
     # Open window and wait for lower-right clitk
+    print("Click on lower-right part of the screenshot area")
     x2, y2 = show_image(tmp_filename, img.width, img.height)
 
     # Draw boundaires
@@ -76,6 +74,7 @@ def prepare_screenshots(cnf: Configuration) -> None:
     draw.line((x2, 0, x2, img.height), fill="red")
     img.save(tmp_filename)
 
+    print("Click on 'next' button place")
     x3, y3 = show_image(tmp_filename, img.width, img.height)
     cnf.mouse_x = x3 * coef
     cnf.mouse_y = y3 * coef
@@ -86,8 +85,7 @@ def prepare_screenshots(cnf: Configuration) -> None:
 
     # Open window and wait "next" button position
     next_page_key = input("Next page keyboard key (eg. pgdn, left, ...): ")
-    if next_page_key:
-        cnf.next_page_key = next_page_key
+    cnf.next_page_key = next_page_key
 
     show_image(tmp_filename, img.width, img.height)
     cnf.x1 = x1 * coef
@@ -143,7 +141,7 @@ def prepare_image(file_in: str, bw: bool=False, page: str="", resize: float=1) -
     if page:
         label = Image.new('L', (width, label_height), 255)
         draw = ImageDraw.Draw(label)
-        font = ImageFont.truetype("/System/Library/Fonts/Keyboard.ttf", label_height)
+        font = ImageFont.truetype("/System/Library/Fonts/Symbol.ttf", label_height)
         draw.text((width * 0.45, 0), page, fill=(0), font=font)
         out.paste(label, (0, height))
 
@@ -171,7 +169,7 @@ def export_to_pdf(cnf: Configuration) -> None:
 
     processed_images: List[Any] = []
     for n, file in enumerate(original_files):
-        label = ""
+        label = "."
         if pages:
             page = 1 + math.floor(0 + (n / len(original_files)) * pages)
             label = f"{page}"

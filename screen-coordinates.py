@@ -36,7 +36,7 @@ while True:
 	coordinates.append([x, y])
 	for c in coordinates:
 		x, y = c[0], c[1]
-		txt = f"({int(x)},{int(y)})"
+		txt = f"({int(x*coef)},{int(y*coef)})"
 		print(txt)
 		draw = ImageDraw.Draw(img)
 		draw.line((x-5, y, x+5, y), fill="orange")
