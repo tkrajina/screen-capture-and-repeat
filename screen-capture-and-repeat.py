@@ -94,7 +94,16 @@ def prepare_screenshots(cnf: Configuration) -> None:
     cnf.y2 = y2 * coef
 
 def make_screenshot(file_name: str, cnf: Configuration, scale: float=1) -> Any:
-    region = (cnf.x1, cnf.y1, cnf.x2 - cnf.x1, cnf.y2 - cnf.y1)
+    width = cnf.x2 - cnf.x1
+    height = cnf.y2 - cnf.y1
+    
+    if width <= 0 or height <= 0:
+        print(f"Error: Invalid region dimensions. Width: {width}, Height: {height}")
+        print(f"Coordinates: x1={cnf.x1}, y1={cnf.y1}, x2={cnf.x2}, y2={cnf.y2}")
+        return None
+    
+    coef = 2 if cnf.retina else 1
+    region = (int(cnf.x1 / coef), int(cnf.y1 / coef), int(width / coef), int(height / coef), )
     #print(f"Screenshot to {file_name} with region {region}")
     img = pyautogui.screenshot(region=region)
     if scale != 1:
@@ -108,7 +117,7 @@ def test_screenshot(cnf: Configuration) -> None:
     tmp_file = cnf.path("example_screenshot.png")
     print(tmp_file)
     make_screenshot(tmp_file, cnf, scale=0.5)
-    show_image(tmp_file, cnf.x2 - cnf.x1, cnf.y2 - cnf.y1)
+    show_image(tmp_file, int(cnf.x2 - cnf.x1), int(cnf.y2 - cnf.y1))
 
 def quit_app(cnf: Configuration) -> None:
     sys.exit(0)
