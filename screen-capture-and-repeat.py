@@ -251,11 +251,11 @@ def take_n_screenshots(cnf: Configuration, count: int) -> None:
         coef = 2 if cnf.retina else 1
         pyautogui.moveTo(cnf.mouse_x / coef, cnf.mouse_y / coef)
         pyautogui.mouseDown()
-        time.sleep(0.05)
+        time.sleep(cnf.sleep_before_screenshot)
         pyautogui.mouseUp()
         if cnf.next_page_key:
             pyautogui.press(cnf.next_page_key)
-        time.sleep(cnf.sleep)
+        time.sleep(cnf.sleep_after_screenshot)
 
 def change_work_dir(cnf: Configuration) -> None:
     dir = input("Enter work directory name:")
@@ -268,10 +268,16 @@ def change_work_dir(cnf: Configuration) -> None:
 
 def wait_time(cnf: Configuration) -> None:
     try:
-        cnf.sleep = float(input("Enter time:"))
+        cnf.sleep_before_screenshot = float(input("Enter time BEFORE screenshot:"))
     except:
         print("Invalid time")
-        cnf.sleep = 0.1
+        cnf.sleep_before_screenshot = 0.1
+    try:
+        cnf.sleep_after_screenshot = float(input("Enter time AFTER screenshot:"))
+    except:
+        print("Invalid time")
+        cnf.sleep_before_screenshot = 0.1
+        cnf.sleep_after_screenshot = 0.1
 
 def open_dir(cnf: Configuration) -> None:
     dir_opener = input(f"Open with command [{cnf.dir_opener}]:")
@@ -293,7 +299,7 @@ def main_menu() -> None:
     options.append(("t", lambda cnf: "Test screenshot", test_screenshot))
     options.append(("s", lambda cnf: f"Take screenshots (sides ratio: {cnf.x2 - cnf.x1}:{cnf.y2 - cnf.y1}={cnf.ratio()})", take_screenshots))
     options.append(("sr", lambda cnf: f"Screenshot the rest of the document", screenshot_the_rest))
-    options.append(("w", lambda cnf: f"Wait between screenshowts ({cnf.sleep}s)", wait_time))
+    options.append(("w", lambda cnf: f"Wait between screenshowts (before: {cnf.sleep_before_screenshot}s, after: {cnf.sleep_after_screenshot})", wait_time))
     options.append(("r", lambda cnf: f"Resize ({cnf.resize_ratio})", resize_ratio))
     options.append(("b", lambda cnf: f"Convert to black-and-white ({cnf.convert_to_bw})", toggle_bw))
     options.append(("re", lambda cnf: f"Retina screen ({cnf.retina})", toggle_retina))

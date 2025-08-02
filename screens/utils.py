@@ -13,7 +13,8 @@ class Configuration:
         self.y1: int = 0
         self.x2: int = 0
         self.y2: int = 0
-        self.sleep: float = 0.1
+        self.sleep_before_screenshot: float = 0.1
+        self.sleep_after_screenshot: float = 0.1
         self.retina: bool = False
         self.mouse_x: int = 0
         self.mouse_y: int = 0
@@ -22,7 +23,7 @@ class Configuration:
         self.convert_to_bw = True
         self.total_pages = 0
         self.dir_opener = "open"
-        self.jsonize = ["work_dir", "x1", "y1", "x2", "y2", "mouse_x", "mouse_y", "resize_ratio", "convert_to_bw", "retina", "sleep", "total_pages", "dir_opener", "next_page_key"]
+        self.jsonize = ["work_dir", "x1", "y1", "x2", "y2", "mouse_x", "mouse_y", "resize_ratio", "convert_to_bw", "retina", "sleep_before_screenshot", "sleep_after_screenshot", "total_pages", "dir_opener", "next_page_key"]
         if self.work_dir != ".":
             os.makedirs(self.work_dir)
 

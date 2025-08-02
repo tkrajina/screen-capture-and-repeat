@@ -1,16 +1,16 @@
 import sys
-from PyQt6.QtWidgets import QWidget, QApplication, QLabel # type: ignore
-from PyQt6.QtGui import QPixmap # type: ignore
+from PyQt6.QtWidgets import QWidget, QApplication, QLabel
+from PyQt6.QtGui import QPixmap
 
 from typing import *
 
-class ShowImage(QWidget): # type: ignore
+class ShowImage(QWidget):
  
     def __init__(self, file_name: str, width: int, height: int) -> None:
         super().__init__()
         self.file_name = file_name
-        self.width = width
-        self.height = height
+        self.width = width # type: ignore
+        self.height = height # type: ignore
         self.click_x = -1
         self.click_y = -1
         self.initUI()
